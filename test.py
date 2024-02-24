@@ -27,9 +27,6 @@ def load_data():
         return index
 
 index = load_data()
-
-
-index = load_data()
 chat_engine = index.as_chat_engine( )
 
 for message in st.session_state.messages: # Display the prior chat messages
