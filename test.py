@@ -4,7 +4,7 @@ import os
 import openai
 from llama_index.llms.openai import OpenAI
 openai.api_key =st.secrets["OPENAI_API_KEY"]
-api_base = "https://pro.aiskt.com"
+api_base = "https://pro.aiskt.com/v1"
 openai.base_url=api_base
 
 st.set_page_config(page_title="Chat with the Power electronic robot", page_icon="🦙", layout="centered", initial_sidebar_state="auto", menu_items=None)
