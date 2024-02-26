@@ -29,7 +29,7 @@ def load_data():
         return index
 
 index = load_data()
-chat_engine = index.as_chat_engine(chat_mode="context",memory=memory) )
+chat_engine = index.as_chat_engine(chat_mode="context",memory=memory) 
 
 for message in st.session_state.messages: # Display the prior chat messages
     with st.chat_message(message["role"]):
