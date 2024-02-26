@@ -39,7 +39,7 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
         st.markdown(prompt)
 
     # 检查用户输入是否包含"拓扑图"
-    if "拓扑图" in prompt:
+    if "buck-boost" in prompt:
         with st.chat_message("assistant"):
             response = chat_engine.chat(prompt)
             st.write(response.response)
