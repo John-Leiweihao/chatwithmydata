@@ -11,25 +11,25 @@ openai.base_url=api_base
 st.set_page_config(page_title="Chat with the Power electronic robot, powered by LlamaIndex", page_icon="🦙", layout="centered", initial_sidebar_state="auto", menu_items=None)
 st.title("Chat with the Power electronic robot, powered by LlamaIndex 💬🦙")
 st.info("Check out the full tutorial to build this app in our [blog post](https://blog.streamlit.io/build-a-chatbot-with-custom-data-sources-powered-by-llamaindex/)", icon="📃")
-with open('./first.txt', 'r') as file:
+with open('./second.txt', 'r') as file:
     content1 = file.read()
 
 if "messages" not in st.session_state: # Initialize the chat messages history
-    st.session_state.messages = [{"role": "assistant", "content": "Ask me  questions about buck-boost!"}
+    st.session_state.messages = [{"role": "user", "content": content1},{"role": "assistant", "content": "好的，我理解了，我会遵循你的要求"}
     ]
     
 @st.cache_resource(show_spinner=False)
 def load_data():
     with st.spinner(text="Loading and indexing the buck-boost docs – hang tight! This should take 1-2 minutes."):
         docs = SimpleDirectoryReader("data1").load_data()
-        service_context = ServiceContext.from_defaults(llm=OpenAI(model="gpt-3.5-turbo", temperature=0.5, system_prompt=content1))
+        service_context = ServiceContext.from_defaults(llm=OpenAI(model="gpt-3.5-turbo", temperature=0, system_prompt="You are a senior engineer at the intersection of electrical engineering and artificial intelligence.and your job is to answer technical questions about buck-boost. Assume that all questions are related to buck-boost. Keep your answers technical and based on facts – do not hallucinate features"))
         index = GPTVectorStoreIndex.from_documents(docs, service_context=service_context)
         return index
 
 index = load_data()
 chat_engine = index.as_chat_engine( )
 
-for message in st.session_state.messages: # Display the prior chat messages
+for message in st.session_state.messages[2:]: # Display the prior chat messages
     with st.chat_message(message["role"]):
         st.write(message["content"])
 
