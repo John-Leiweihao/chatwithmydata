@@ -14,7 +14,7 @@ with open('./second.txt', 'r') as file:
     content1 = file.read()
 
 if "messages" not in st.session_state: # Initialize the chat messages history
-    st.session_state.messages = [{"role": "user", "content": content1},{"role": "assistant", "content": "好的，我理解了，我会遵循你的要求"}
+    st.session_state.messages = [{"role": "user", "content": content1},{"role": "assistant", "content": "好的，我一定会按照你的要求做的"}
     ]
     
 @st.cache_resource(show_spinner=False)
