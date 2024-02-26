@@ -21,7 +21,7 @@ if "messages" not in st.session_state: # Initialize the chat messages history
 def load_data():
     with st.spinner(text="Loading and indexing the buck-boost docs – hang tight! This should take 1-2 minutes."):
         docs = SimpleDirectoryReader("data1").load_data()
-        service_context = ServiceContext.from_defaults(llm=OpenAI(model="gpt-4", temperature=0.1, system_prompt="You are a senior engineer at the intersection of electrical engineering and artificial intelligence.and your job is to answer technical questions about buck-boost. Assume that all questions are related to buck-boost. Keep your answers technical and based on facts – do not hallucinate features"))
+        service_context = ServiceContext.from_defaults(llm=OpenAI(model="gpt-4-0125-preview", temperature=0.1, system_prompt="You are a senior engineer at the intersection of electrical engineering and artificial intelligence.and your job is to answer technical questions about buck-boost. Assume that all questions are related to buck-boost. Keep your answers technical and based on facts – do not hallucinate features"))
         index = GPTVectorStoreIndex.from_documents(docs, service_context=service_context)
         return index
 
