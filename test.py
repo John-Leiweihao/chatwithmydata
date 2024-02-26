@@ -4,8 +4,8 @@ import os
 import openai
 from llama_index.llms.openai import OpenAI
 openai.api_key =st.secrets["OPENAI_API_KEY"]
-#api_base = "https://one.aiskt.com/v1"
-#openai.base_url=api_base
+api_base = "https://pro.aiskt.com"
+openai.base_url=api_base
 
 st.set_page_config(page_title="Chat with the Power electronic robot", page_icon="🦙", layout="centered", initial_sidebar_state="auto", menu_items=None)
 st.title("Chat with the Power electronic robot, powered by LlamaIndex 💬")
@@ -21,7 +21,7 @@ if "messages" not in st.session_state: # Initialize the chat messages history
 def load_data():
     with st.spinner(text="Loading and indexing the buck-boost docs – hang tight! This should take 1-2 minutes."):
         docs = SimpleDirectoryReader("data1").load_data()
-        service_context = ServiceContext.from_defaults(llm=OpenAI(model="gpt-3.5-turbo", temperature=0.5, system_prompt="You are a senior engineer at the intersection of electrical engineering and artificial intelligence.and your job is to answer technical questions about buck-boost. Assume that all questions are related to buck-boost. Keep your answers technical and based on facts – do not hallucinate features"))
+        service_context = ServiceContext.from_defaults(llm=OpenAI(model="gpt-4", temperature=0.1, system_prompt="You are a senior engineer at the intersection of electrical engineering and artificial intelligence.and your job is to answer technical questions about buck-boost. Assume that all questions are related to buck-boost. Keep your answers technical and based on facts – do not hallucinate features"))
         index = GPTVectorStoreIndex.from_documents(docs, service_context=service_context)
         return index
 
