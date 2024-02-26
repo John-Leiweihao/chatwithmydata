@@ -8,7 +8,7 @@ openai.api_key =os.environ['OPENAI_API_KEY']
 api_base = "https://one.aiskt.com/v1"
 openai.base_url=api_base
 
-st.set_page_config(page_title="Chat with the Power electronic robot, powered by LlamaIndex", page_icon="🦙", layout="centered", initial_sidebar_state="auto", menu_items=None)
+st.set_page_config(page_title="Chat with the Power electronic robot", page_icon="🦙", layout="centered", initial_sidebar_state="auto", menu_items=None)
 st.title("Chat with the Power electronic robot, powered by LlamaIndex 💬🦙")
 st.info("Check out the full tutorial to build this app in our [blog post](https://blog.streamlit.io/build-a-chatbot-with-custom-data-sources-powered-by-llamaindex/)", icon="📃")
 with open('./second.txt', 'r') as file:
@@ -41,18 +41,18 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
     # 检查用户输入是否包含"拓扑图"
     if "buck-boost" in prompt:
         with st.chat_message("assistant"):
-          with st.spinner("Thinking..."):
-            response = chat_engine.chat(prompt)
-            st.write(response.response)
-            st.image('buck-boost电路.jfif')  # 假设这是与“拓扑图”相关的图片
-            message = {"role": "assistant", "content": response.response}
-            st.session_state.messages.append(message)
+            with st.spinner("Thinking..."):
+                response = chat_engine.chat(prompt)
+                st.write(response.response)
+                st.image('buck-boost电路.jfif')  # 假设这是与“拓扑图”相关的图片
+                message = {"role": "assistant", "content": response.response}
+                st.session_state.messages.append(message)
     else:
         with st.chat_message("assistant"):
-          with st.spinner("Thinking..."):
-            # 如果用户输入不包含"拓扑图"，执行其他回答或操作
-            response = chat_engine.chat(prompt)
-            st.write(response.response)
-            # 可以在这里添加其他处理逻辑
-            message = {"role": "assistant", "content": response.response}
-            st.session_state.messages.append(message)
+              with st.spinner("Thinking..."):
+                # 如果用户输入不包含"拓扑图"，执行其他回答或操作
+                response = chat_engine.chat(prompt)
+                st.write(response.response)
+                # 可以在这里添加其他处理逻辑
+                message = {"role": "assistant", "content": response.response}
+                st.session_state.messages.append(message)
