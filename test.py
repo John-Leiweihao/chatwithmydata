@@ -3,12 +3,12 @@ from llama_index.core import VectorStoreIndex, ServiceContext, Document ,SimpleD
 import os
 import openai
 from llama_index.llms.openai import OpenAI
-from llama_index.core.memory import ChatMemoryBuffer
+
 
 openai.api_key =st.secrets["OPENAI_API_KEY"]
 api_base = "https://pro.aiskt.com/v1"
 openai.base_url=api_base
-memory = ChatMemoryBuffer.from_defaults(token_limit=1500)
+
 
 st.set_page_config(page_title="Chat with the Power electronic robot", page_icon="🦙", layout="centered", initial_sidebar_state="auto", menu_items=None)
 st.title("Chat with the Power electronic robot, powered by LlamaIndex 💬")
@@ -22,13 +22,14 @@ if "messages" not in st.session_state: # Initialize the chat messages history
     
 @st.cache_resource(show_spinner=False)
 def load_data():
+    with st.spinner(text="Loading and indexing the buck-boost docs – hang tight! This should take 1-2 minutes."):
         docs = SimpleDirectoryReader("data2").load_data()
-        index = VectorStoreIndex.from_documents(docs)
+        service_context = ServiceContext.from_defaults(llm=OpenAI(model="gpt-4-0125-preview", temperature=0.1))
+        index = VectorStoreIndex.from_documents(docs, service_context=service_context)
         return index
 
 index = load_data()
-llm=OpenAI(model="gpt-4-0125-preview", temperature=0.5)
-chat_engine = index.as_chat_engine(chat_mode="condense_question",llm=llm,memory=memory) 
+chat_engine = index.as_chat_engine(chat_mode="condense_question", verbose=True) 
 
 for message in st.session_state.messages: # Display the prior chat messages
     with st.chat_message(message["role"]):
@@ -38,12 +39,11 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)
-    messages=st.session_state.messages
     # 检查用户输入是否包含"拓扑图"
     if "buck-boost" in prompt:
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
-                response = chat_engine.chat(prompt,messages)
+                response = chat_engine.chat(prompt)
                 st.write(response.response)
                 st.image('buck-boost电路.jfif')  # 假设这是与“拓扑图”相关的图片
                 message = {"role": "assistant", "content": response.response}
@@ -52,7 +52,7 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
                 # 如果用户输入不包含"拓扑图"，执行其他回答或操作
-                response = chat_engine.chat(prompt,st.session_state.messages)
+                response = chat_engine.chat(prompt)
                 st.write(response.response)
                 # 可以在这里添加其他处理逻辑
                 message = {"role": "assistant", "content": response.response}
