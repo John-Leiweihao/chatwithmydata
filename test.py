@@ -29,7 +29,7 @@ if "messages" not in st.session_state:  # Initialize the chat messages history
 @st.cache_resource(show_spinner=False)
 def load_data():
     with st.spinner(text="Loading and indexing the buck-boost docs – hang tight! This should take 1-2 minutes."):
-        docs = SimpleDirectoryReader("data2").load_data()
+        docs = SimpleDirectoryReader("data1").load_data()
         service_context = ServiceContext.from_defaults(llm=OpenAI(model="gpt-4-0125-preview", temperature=0.1))
         index = VectorStoreIndex.from_documents(docs, service_context=service_context)
         return index
