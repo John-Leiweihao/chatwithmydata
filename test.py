@@ -28,32 +28,36 @@ def load_data():
 
 index = load_data()
 llm=OpenAI(model="gpt-4-0125-preview", temperature=0.5)
-chat_engine = index.as_chat_engine(chat_mode="condense_plus_context",llm=llm,memory=memory) 
+chat_engine = index.as_chat_engine(chat_mode="context",llm=llm,memory=memory) 
 
 for message in st.session_state.messages: # Display the prior chat messages
     with st.chat_message(message["role"]):
         st.write(message["content"])
+
+def update_chat_memory(user_input, bot_response=None):
+    # 将用户输入添加到聊天记忆中
+    memory.add_message({"role": "user", "content": user_input})
+    if bot_response:
+        # 如果有机器人响应，也添加到聊天记忆中
+        memory.add_message({"role": "assistant", "content": bot_response})
 
 if prompt := st.chat_input("Your question"):  # Prompt for user input and save to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)
 
-    # 检查用户输入是否包含"拓扑图"
+    update_chat_memory(prompt)  # 更新聊天记忆以包含最新的用户输入
+
     if "buck-boost" in prompt:
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
-                response = chat_engine.chat(prompt)
+                response = chat_engine.chat(prompt, memory=memory)  # 确保传入当前的聊天记忆
                 st.write(response.response)
-                st.image('buck-boost电路.jfif')  # 假设这是与“拓扑图”相关的图片
-                message = {"role": "assistant", "content": response.response}
-                st.session_state.messages.append(message)
+                st.image('buck-boost电路.jfif')
+                update_chat_memory(prompt, response.response)  # 更新聊天记忆以包含机器人的响应
     else:
         with st.chat_message("assistant"):
-              with st.spinner("Thinking..."):
-                # 如果用户输入不包含"拓扑图"，执行其他回答或操作
-                response = chat_engine.chat(prompt)
+            with st.spinner("Thinking..."):
+                response = chat_engine.chat(prompt, memory=memory)  # 确保传入当前的聊天记忆
                 st.write(response.response)
-                # 可以在这里添加其他处理逻辑
-                message = {"role": "assistant", "content": response.response}
-                st.session_state.messages.append(message)
+                update_chat_memory(prompt, response.response)  # 同上
