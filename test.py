@@ -3,6 +3,55 @@ from llama_index.core import VectorStoreIndex, ServiceContext, Document, SimpleD
 import os
 import openai
 from llama_index.llms.openai import OpenAI
+from llama_index.core.llms import ChatMessage, MessageRole
+from llama_index.core import ChatPromptTemplate
+
+# Text QA Prompt
+chat_text_qa_msgs = [
+    ChatMessage(
+        role=MessageRole.SYSTEM,
+        content=(
+            "Always answer the question, even if the context isn't helpful."
+        ),
+    ),
+    ChatMessage(
+        role=MessageRole.USER,
+        content=(
+            "Context information is below.\n"
+            "---------------------\n"
+            "{context_str}\n"
+            "---------------------\n"
+            "Given the context information and not prior knowledge, "
+            "answer the question: {query_str}\n"
+        ),
+    ),
+]
+text_qa_template = ChatPromptTemplate(chat_text_qa_msgs)
+
+# Refine Prompt
+chat_refine_msgs = [
+    ChatMessage(
+        role=MessageRole.SYSTEM,
+        content=(
+            "Always answer the question, even if the context isn't helpful."
+        ),
+    ),
+    ChatMessage(
+        role=MessageRole.USER,
+        content=(
+            "We have the opportunity to refine the original answer "
+            "(only if needed) with some more context below.\n"
+            "------------\n"
+            "{context_msg}\n"
+            "------------\n"
+            "Given the new context, refine the original answer to better "
+            "answer the question: {query_str}. "
+            "If the context isn't useful, output the original answer again.\n"
+            "Original Answer: {existing_answer}"
+        ),
+    ),
+]
+refine_template = ChatPromptTemplate(chat_refine_msgs)
 
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 api_base = "https://pro.aiskt.com/v1"
@@ -33,7 +82,8 @@ def load_data():
 
 
 index = load_data()
-chat_engine = index.as_chat_engine()
+chat_engine = index.as_chat_engine( text_qa_template=text_qa_template,
+        refine_template=refine_template)
 
 for message in st.session_state.messages:  # Display the prior chat messages
     with st.chat_message(message["role"]):
@@ -51,7 +101,7 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
     if "buck-boost" in prompt:
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
-                response = chat_engine.chat(messages_history)
+                response = chat_engine.chat(prompt)
                 st.write(response.response)
                 st.image('buck-boost电路.jfif')  # 假设这是与“拓扑图”相关的图片
                 message = {"role": "assistant", "content": response.response}
@@ -60,7 +110,7 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
                 # 如果用户输入不包含"拓扑图"，执行其他回答或操作
-                response = chat_engine.chat(messages_history)
+                response = chat_engine.chat(prompt)
                 st.write(response.response)
                 # 可以在这里添加其他处理逻辑
                 message = {"role": "assistant", "content": response.response}
