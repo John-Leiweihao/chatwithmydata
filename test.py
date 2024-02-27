@@ -4,8 +4,8 @@ import os
 import openai
 from llama_index.llms.openai import OpenAI
 from llama_index.core.memory import ChatMemoryBuffer
+from llama_index.core.llms import ChatMessage
 
-memory = ChatMemoryBuffer.from_defaults(token_limit=1500)
 
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 api_base = "https://pro.aiskt.com/v1"
@@ -36,8 +36,7 @@ def load_data():
 
 
 index = load_data()
-chat_engine = index.as_chat_engine( chat_mode="context",
-    memory=memory,)
+chat_engine = index.as_chat_engine( chat_mode="context")
 
 for message in st.session_state.messages:  # Display the prior chat messages
     with st.chat_message(message["role"]):
@@ -47,15 +46,15 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)
-    messages_history = [
-        {"role": m["role"], "content": m["content"]}
-        for m in st.session_state.messages
-    ]
+messages_history = [
+    ChatMessage(role=MessageRole.USER if m["role"] == "user" else MessageRole.ASSISTANT, content=m["content"])
+    for m in st.session_state.messages
+]
     # 检查用户输入是否包含"拓扑图"
     if "buck-boost" in prompt:
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
-                response = chat_engine.chat(prompt)
+                response = chat_engine.chat(prompt,messages_history)
                 st.write(response.response)
                 st.image('buck-boost电路.jfif')  # 假设这是与“拓扑图”相关的图片
                 message = {"role": "assistant", "content": response.response}
@@ -64,7 +63,7 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
                 # 如果用户输入不包含"拓扑图"，执行其他回答或操作
-                response = chat_engine.chat(prompt)
+                response = chat_engine.chat(prompt,messages_history)
                 st.write(response.response)
                 # 可以在这里添加其他处理逻辑
                 message = {"role": "assistant", "content": response.response}
