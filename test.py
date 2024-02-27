@@ -3,9 +3,7 @@ from llama_index.core import VectorStoreIndex, ServiceContext, Document ,SimpleD
 import os
 import openai
 from llama_index.llms.openai import OpenAI
-from llama_index.core.memory import ChatMemoryBuffer
 
-memory = ChatMemoryBuffer.from_defaults(token_limit=3900)
 
 openai.api_key =st.secrets["OPENAI_API_KEY"]
 api_base = "https://pro.aiskt.com/v1"
@@ -30,7 +28,7 @@ def load_data():
         return index
 
 index = load_data()
-chat_engine = index.as_chat_engine(chat_mode="context",memory=memory) 
+chat_engine = index.as_chat_engine(chat_mode="context",memory=st.session_state.messages) 
 
 for message in st.session_state.messages: # Display the prior chat messages
     with st.chat_message(message["role"]):
