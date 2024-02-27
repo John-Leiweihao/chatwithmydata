@@ -59,7 +59,7 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
                 st.image('buck-boost电路.jfif')  # 假设这是与“拓扑图”相关的图片
                 message = {"role": "assistant", "content": response.response}
                 st.session_state.messages.append(message)
-    else if all(param in prompt for param in ["Uin", "Uo", "Prated", "fsw"]):
+    elif all(param in prompt for param in ["Uin", "Uo", "Prated", "fsw"]):
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
                 # 如果用户输入不包含"拓扑图"，执行其他回答或操作
