@@ -3,12 +3,12 @@ from llama_index.core import VectorStoreIndex, ServiceContext, Document ,SimpleD
 import os
 import openai
 from llama_index.llms.openai import OpenAI
-
+from llama_index.core.memory import ChatMemoryBuffer
 
 openai.api_key =st.secrets["OPENAI_API_KEY"]
 api_base = "https://pro.aiskt.com/v1"
 openai.base_url=api_base
-
+memory = ChatMemoryBuffer.from_defaults(token_limit=1500)
 
 st.set_page_config(page_title="Chat with the Power electronic robot", page_icon="🦙", layout="centered", initial_sidebar_state="auto", menu_items=None)
 st.title("Chat with the Power electronic robot, powered by LlamaIndex 💬")
@@ -23,12 +23,12 @@ if "messages" not in st.session_state: # Initialize the chat messages history
 @st.cache_resource(show_spinner=False)
 def load_data():
         docs = SimpleDirectoryReader("data2").load_data()
-        service_context = ServiceContext.from_defaults(llm=OpenAI(model="gpt-4-0125-preview", temperature=0.5))
-        index = VectorStoreIndex.from_documents(docs, service_context=service_context)
+        index = VectorStoreIndex.from_documents(docs)
         return index
 
 index = load_data()
-chat_engine = index.as_chat_engine(chat_mode="context",memory=st.session_state.messages) 
+llm=OpenAI(model="gpt-4-0125-preview", temperature=0.5)
+chat_engine = index.as_chat_engine(chat_mode="context",llm=llm,memory=memory) 
 
 for message in st.session_state.messages: # Display the prior chat messages
     with st.chat_message(message["role"]):
