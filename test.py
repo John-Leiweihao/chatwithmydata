@@ -4,7 +4,7 @@ import os
 import openai
 from llama_index.llms.openai import OpenAI
 from llama_index.core.memory import ChatMemoryBuffer
-from llama_index.core.llms import ChatMessage
+from llama_index.core.llms import ChatMessage, MessageRole
 
 
 openai.api_key = st.secrets["OPENAI_API_KEY"]
