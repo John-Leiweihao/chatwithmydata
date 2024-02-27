@@ -2,7 +2,7 @@ import streamlit as st
 from llama_index.core import VectorStoreIndex, ServiceContext, Document, SimpleDirectoryReader
 from llama_index.llms.openai import OpenAI
 from llama_index.core.memory import ChatMemoryBuffer
-
+import openai
 # 配置和初始化
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 api_base = "https://pro.aiskt.com/v1"
