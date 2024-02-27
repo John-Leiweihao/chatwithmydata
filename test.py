@@ -1,5 +1,5 @@
 import streamlit as st
-from llama_index.core import GPTVectorStoreIndex, ServiceContext, Document ,SimpleDirectoryReader
+from llama_index.core import VectorStoreIndex, ServiceContext, Document ,SimpleDirectoryReader
 import os
 import openai
 from llama_index.llms.openai import OpenAI
@@ -24,7 +24,7 @@ if "messages" not in st.session_state: # Initialize the chat messages history
 def load_data():
     with st.spinner(text="Loading and indexing the buck-boost docs – hang tight! This should take 1-2 minutes."):
         docs = SimpleDirectoryReader("data1").load_data()
-        index = GPTVectorStoreIndex.from_documents(docs)
+        index = VectorStoreIndex.from_documents(docs)
         return index
 
 index = load_data()
