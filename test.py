@@ -65,6 +65,7 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
                 # 如果用户输入不包含"拓扑图"，执行其他回答或操作
                 response = chat_engine.chat(prompt,messages_history)
                 answer_list=response.response
+                st.write(answer_list)
                 Uin, Uo, Prated, fsw = answer_list
                 M,L1, Cin1, Cout1=twolevelbuckboost.calculation(Uin,Uo,Prated,fsw)
                 reply="这个电路工作在{}模态，其中电路的电感值为{},输入电容值为{},输出电容值为{}.".format(M,L1,Cin1,Cout1)
