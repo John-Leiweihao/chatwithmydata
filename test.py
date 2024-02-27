@@ -68,7 +68,7 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
                 #Uin=list[0],Uo=list[1],Prated=list[2],fsw=list[3]
                 #M,L1, Cin1, Cout1=twolevelbuckboost.calculation(Uin,Uo,Prated,fsw)
                 #reply="这个电路工作在{}模态，其中电路的电感值为{},输入电容值为{},输出电容值为{}.".format(M,L1,Cin1,Cout1)
-                st.write(reply)
+                st.write(list)
                 # 可以在这里添加其他处理逻辑
                 message = {"role": "assistant", "content": list}
                 st.session_state.messages.append(message)
