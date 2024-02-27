@@ -29,7 +29,7 @@ def load_data():
 
 index = load_data()
 llm = OpenAI(model="gpt-4-0125-preview", temperature=0)
-chat_engine = index.as_chat_engine(chat_mode="context") 
+chat_engine = index.as_chat_engine(chat_mode="context",llm=llm) 
 
 for message in st.session_state.messages: # Display the prior chat messages
     with st.chat_message(message["role"]):
