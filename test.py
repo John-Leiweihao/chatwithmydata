@@ -24,11 +24,11 @@ if "messages" not in st.session_state: # Initialize the chat messages history
 def load_data():
     with st.spinner(text="Loading and indexing the buck-boost docs – hang tight! This should take 1-2 minutes."):
         docs = SimpleDirectoryReader("data1").load_data()
-        service_context = ServiceContext.from_defaults(llm=OpenAI(model="gpt-4-0125-preview", temperature=0))
-        index = GPTVectorStoreIndex.from_documents(docs, service_context=service_context)
+        index = GPTVectorStoreIndex.from_documents(docs)
         return index
 
 index = load_data()
+llm = OpenAI(model="gpt-4-0125-preview", temperature=0)
 chat_engine = index.as_chat_engine(chat_mode="context") 
 
 for message in st.session_state.messages: # Display the prior chat messages
