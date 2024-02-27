@@ -3,13 +3,13 @@ from llama_index.core import GPTVectorStoreIndex, ServiceContext, Document ,Simp
 import os
 import openai
 from llama_index.llms.openai import OpenAI
-from llama_index.core.memory import ChatMemoryBuffer
+
 
 openai.api_key =st.secrets["OPENAI_API_KEY"]
 api_base = "https://pro.aiskt.com/v1"
 openai.base_url=api_base
 
-memory = ChatMemoryBuffer.from_defaults( )
+
 st.set_page_config(page_title="Chat with the Power electronic robot", page_icon="🦙", layout="centered", initial_sidebar_state="auto", menu_items=None)
 st.title("Chat with the Power electronic robot, powered by LlamaIndex 💬")
 st.info("Check out the full tutorial to build this app in our [blog post](https://blog.streamlit.io/build-a-chatbot-with-custom-data-sources-powered-by-llamaindex/)", icon="📃")
@@ -29,7 +29,7 @@ def load_data():
         return index
 
 index = load_data()
-chat_engine = index.as_chat_engine(memory=memory) 
+chat_engine = index.as_chat_engine(chat_mode="context") 
 
 for message in st.session_state.messages: # Display the prior chat messages
     with st.chat_message(message["role"]):
