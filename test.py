@@ -46,7 +46,7 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)
-messages_history = [
+    messages_history = [
     ChatMessage(role=MessageRole.USER if m["role"] == "user" else MessageRole.ASSISTANT, content=m["content"])
     for m in st.session_state.messages
 ]
