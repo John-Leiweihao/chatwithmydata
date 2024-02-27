@@ -59,12 +59,23 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
                 st.image('buck-boost电路.jfif')  # 假设这是与“拓扑图”相关的图片
                 message = {"role": "assistant", "content": response.response}
                 st.session_state.messages.append(message)
-    else:
+    else if all(param in prompt for param in ["Uin", "Uo", "Prated", "fsw"]):
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
                 # 如果用户输入不包含"拓扑图"，执行其他回答或操作
                 response = chat_engine.chat(prompt,messages_history)
-                st.write(response.response)
+                list=response.response
+                Uin=response[0],Uo=response[1],Prated=response[2],fsw=response[3]
+                M,L1, Cin1, Cout1=twolevelbuckboost.calculation(Uin,Uo,Prated,fsw)
+                reply="这个电路工作在{}模态，其中电路的电感值为{},输入电容值为{},输出电容值为{}.".format(M,L1,Cin1,Cout1)
+                st.write(reply)
                 # 可以在这里添加其他处理逻辑
+                message = {"role": "assistant", "content": reply}
+                st.session_state.messages.append(message)
+    else:
+         with st.chat_message("assistant"):
+             with st.spinner("Thinking..."):
+                response = chat_engine.chat(prompt,messages_history)
+                st.write(response.response)
                 message = {"role": "assistant", "content": response.response}
                 st.session_state.messages.append(message)
