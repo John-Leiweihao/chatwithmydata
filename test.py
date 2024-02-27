@@ -38,7 +38,7 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)
-messages=st.session_state.messages
+    messages=st.session_state.messages
     # 检查用户输入是否包含"拓扑图"
     if "buck-boost" in prompt:
         with st.chat_message("assistant"):
