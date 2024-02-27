@@ -38,12 +38,12 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)
-
+messages=st.session_state.messages
     # 检查用户输入是否包含"拓扑图"
     if "buck-boost" in prompt:
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
-                response = chat_engine.chat(prompt,st.session_state.messages)
+                response = chat_engine.chat(prompt,messages)
                 st.write(response.response)
                 st.image('buck-boost电路.jfif')  # 假设这是与“拓扑图”相关的图片
                 message = {"role": "assistant", "content": response.response}
