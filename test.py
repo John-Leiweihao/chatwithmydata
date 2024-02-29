@@ -17,7 +17,7 @@ st.set_page_config(page_title="Chat with the Power electronic robot", page_icon=
 st.title("Chat with the Power electronic robot, powered by LlamaIndex 💬")
 st.info(
     "Hello, I am a robot designed specifically for buck-boost circuits!",
-    icon="(:smile:)")
+    icon=":smile:")
 with open('./second.txt', 'r') as file:
     content1 = file.read()
 
