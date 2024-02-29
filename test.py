@@ -79,7 +79,7 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
                 #st.write(response.response)
                 Uin, Uo, Prated, fsw = answer_list
                 M,L1, Cin1, Cout1,R,KP,KI=twolevelbuckboost.calculation2(Uin,Uo,Prated,fsw)
-                reply="这个两电平buck-boost电路工作在{}模态，其中电路的电感值为{},输入电容值为{},输出电容值为{},负载电阻值为{}.对于这款电源，我推荐您使用PI控制器，控制器的框图如下图所示，其中KP值为{}，KI值为{}.".format(M,L1,Cin1,Cout1,R,KP,KI)
+                reply="The two-level buck-boost circuit operates in {} mode,the circuit inductance L value is{}H,the value of capacitor C1 is {}F,The value of capacitor C2 is {},the load resistance R is{}Ω.For this power supply, I recommend you to use the PI controller, the block diagram of the controller is shown below, where KP value is {}, KI value is {}.".format(M,L1,Cin1,Cout1,R,KP,KI)
                 st.write(reply)
                 st.image('twolevelbuckboostPI.png')
                 # 可以在这里添加其他处理逻辑
