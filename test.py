@@ -12,7 +12,7 @@ openai.api_key = st.secrets["OPENAI_API_KEY"]
 api_base = "https://pro.aiskt.com/v1"
 openai.base_url = api_base
 
-st.set_page_config(page_title="Chat with the Power electronic robot", page_icon="🤖", layout="wide",
+st.set_page_config(page_title="Chat with the Power electronic robot", page_icon="🤖", layout="centered",
                    initial_sidebar_state="expanded", menu_items=None)
 st.title("Chat with the Power electronic robot🤖, powered by LlamaIndex 🙂")
 st.info( "Hello, I am a robot designed specifically for buck-boost circuits!", icon="🤟")
