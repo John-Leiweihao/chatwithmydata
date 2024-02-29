@@ -16,7 +16,7 @@ st.set_page_config(page_title="Chat with the Power electronic robot", page_icon=
                    initial_sidebar_state="auto", menu_items=None)
 st.title("Chat with the Power electronic robot, powered by LlamaIndex 💬")
 st.info(
-    "Check out the full tutorial to build this app in our [blog post](https://blog.streamlit.io/build-a-chatbot-with-custom-data-sources-powered-by-llamaindex/)",
+    "Hello, I am a robot designed specifically for buck-boost circuits!",
     icon="📃")
 with open('./second.txt', 'r') as file:
     content1 = file.read()
