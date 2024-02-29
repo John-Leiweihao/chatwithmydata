@@ -83,8 +83,8 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
                # st.write(reply)
                 #st.image('twolevelbuckboostPI.png')
                 # 可以在这里添加其他处理逻辑
-                message = {"role": "assistant", "content": reply}
-                st.session_state.messages.append(message)
+                #message = {"role": "assistant", "content": reply}
+                #st.session_state.messages.append(message)
     elif all(param in prompt for param in ["Uin", "Uo", "Prated", "fsw","three-level"]):
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
