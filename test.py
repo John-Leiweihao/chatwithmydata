@@ -58,7 +58,7 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
                 response = chat_engine.chat(prompt,messages_history)
                 st.write(response.response)
                 st.write("The topology of the two-level buck-boost circuit is shown in the following figure")
-                st.image('buck-boost电路.jfif')  # 假设这是与“拓扑图”相关的图片
+                st.image('twolevelbuckboost.png')  # 假设这是与“拓扑图”相关的图片
                 message = {"role": "assistant", "content": response.response}
                 st.session_state.messages.append(message)
     elif "three-level buck-boost" in prompt:
@@ -67,7 +67,7 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
                 response = chat_engine.chat(prompt,messages_history)
                 st.write(response.response)
                 st.write("The topology of the three-level buck-boost circuit is shown in the following figure")
-                st.image('buck-boost电路.jfif')  # 假设这是与“拓扑图”相关的图片
+                st.image('threelevelbuckboost.png')  # 假设这是与“拓扑图”相关的图片
                 message = {"role": "assistant", "content": response.response}
                 st.session_state.messages.append(message)
     elif all(param in prompt for param in ["Uin", "Uo", "Prated", "fsw","two-level"]):
@@ -81,7 +81,7 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
                 M,L1, Cin1, Cout1,R,KP,KI=twolevelbuckboost.calculation2(Uin,Uo,Prated,fsw)
                 reply="这个两电平buck-boost电路工作在{}模态，其中电路的电感值为{},输入电容值为{},输出电容值为{},负载电阻值为{}.对于这款电源，我推荐您使用PI控制器，控制器的框图如下图所示，其中KP值为{}，KI值为{}.".format(M,L1,Cin1,Cout1,R,KP,KI)
                 st.write(reply)
-                st.image()
+                st.image('twolevelbuckboostPI.png')
                 # 可以在这里添加其他处理逻辑
                 message = {"role": "assistant", "content": reply}
                 st.session_state.messages.append(message)
@@ -93,10 +93,10 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
                 answer_list = ast.literal_eval(response.response)
                # st.write(answer_list)
                 Uin, Uo, Prated, fsw = answer_list
-                M,L1, Cin1, Cout1,R,KP,KI=twolevelbuckboost.calculation3(Uin,Uo,Prated,fsw)
+                M,L1, Cin1, Cout1,R,KP,KI=threelevelbuckboost.calculation3(Uin,Uo,Prated,fsw)
                 reply="这个三电平buck-boost电路工作在{}模态，其中电路的电感值为{},输入电容值为{},输出电容值为{},负载电阻值为{}.对于这款电源，我推荐您使用PI控制器，控制器的框图如下图所示，其中KP值为{}，KI值为{}.".format(M,L1,Cin1,Cout1,R,KP,KI)
                 st.write(reply)
-                st.image()
+                st.image('threelevelbuckboostPI.png')
                 # 可以在这里添加其他处理逻辑
                 message = {"role": "assistant", "content": reply}
                 st.session_state.messages.append(message)
