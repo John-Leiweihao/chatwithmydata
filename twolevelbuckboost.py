@@ -158,5 +158,5 @@ def calculation2(Uin,Uo,Prated,fsw):
     L_str = format(L, ".3e")
     C1_str = format(C1, ".3e")
     C2_str = format(C2, ".3e")
-
+    R=format(R,".3g")
     return M,L_str,C1_str,C2_str,R,kpi,kii
