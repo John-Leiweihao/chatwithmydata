@@ -75,16 +75,16 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
             with st.spinner("Thinking..."):
                 # 如果用户输入不包含"拓扑图"，执行其他回答或操作
                 response = chat_engine.chat(prompt,messages_history)
-                #answer_list = ast.literal_eval(response.response)
-                st.write(response.response)
-                #Uin, Uo, Prated, fsw = answer_list
-                #M,L1, Cin1, Cout1,R,KP,KI=twolevelbuckboost.calculation2(Uin,Uo,Prated,fsw)
-                #reply="这个两电平buck-boost电路工作在{}模态，其中电路的电感值为{},输入电容值为{},输出电容值为{},负载电阻值为{}.对于这款电源，我推荐您使用PI控制器，控制器的框图如下图所示，其中KP值为{}，KI值为{}.".format(M,L1,Cin1,Cout1,R,KP,KI)
-               # st.write(reply)
-                #st.image('twolevelbuckboostPI.png')
+                answer_list = ast.literal_eval(response.response)
+                #st.write(response.response)
+                Uin, Uo, Prated, fsw = answer_list
+                M,L1, Cin1, Cout1,R,KP,KI=twolevelbuckboost.calculation2(Uin,Uo,Prated,fsw)
+                reply="这个两电平buck-boost电路工作在{}模态，其中电路的电感值为{},输入电容值为{},输出电容值为{},负载电阻值为{}.对于这款电源，我推荐您使用PI控制器，控制器的框图如下图所示，其中KP值为{}，KI值为{}.".format(M,L1,Cin1,Cout1,R,KP,KI)
+                st.write(reply)
+                st.image('twolevelbuckboostPI.png')
                 # 可以在这里添加其他处理逻辑
-                #message = {"role": "assistant", "content": reply}
-                #st.session_state.messages.append(message)
+                message = {"role": "assistant", "content": reply}
+                st.session_state.messages.append(message)
     elif all(param in prompt for param in ["Uin", "Uo", "Prated", "fsw","three-level"]):
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
