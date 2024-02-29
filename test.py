@@ -14,7 +14,7 @@ openai.base_url = api_base
 
 st.set_page_config(page_title="Chat with the Power electronic robot", page_icon="🤖", layout="centered",
                    initial_sidebar_state="auto", menu_items=None)
-st.title("Chat with the Power electronic robot, powered by LlamaIndex 🙂")
+st.title("Chat with the Power electronic robot🤖, powered by LlamaIndex 🙂")
 st.info( "Hello, I am a robot designed specifically for buck-boost circuits!", icon="🤟")
 with open('./second.txt', 'r') as file:
     content1 = file.read()
