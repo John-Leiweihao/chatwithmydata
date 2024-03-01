@@ -18,8 +18,10 @@ st.title("Chat with the Power electronic robot🤖, powered by LlamaIndex 🙂")
 st.info( "Hello, I am a robot designed specifically for buck-boost circuits!", icon="🤟")
 with open('./second.txt', 'r') as file:
     content1 = file.read()
+  
+clear_button=st.sidebar.button('Clear Conversation',key='clear')
 
-if "messages" not in st.session_state:  # Initialize the chat messages history
+if clear_button or "messages" not in st.session_state:  # Initialize the chat messages history
     st.session_state.messages = [{"role": "user", "content": content1},
                                  {"role": "assistant", "content": "OK,I understand."}
                                  ]
@@ -49,14 +51,14 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
     ChatMessage(role=MessageRole.USER if m["role"] == "user" else MessageRole.ASSISTANT, content=m["content"])
     for m in st.session_state.messages
 ]
-    # 检查用户输入是否包含"拓扑图"
+  #回答
     if "two-level buck-boost" in prompt:
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
                 response = chat_engine.chat(prompt,messages_history)
                 st.write(response.response)
                 st.write("The topology of the two-level buck-boost circuit is shown in the following figure")
-                st.image('twolevelbuckboost.png')  # 假设这是与“拓扑图”相关的图片
+                st.image('twolevelbuckboost.png')  
                 message = {"role": "assistant", "content": response.response}
                 st.session_state.messages.append(message)
     elif "three-level buck-boost" in prompt:
@@ -65,7 +67,7 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
                 response = chat_engine.chat(prompt,messages_history)
                 st.write(response.response)
                 st.write("The topology of the three-level buck-boost circuit is shown in the following figure")
-                st.image('threelevelbuckboost.png')  # 假设这是与“拓扑图”相关的图片
+                st.image('threelevelbuckboost.png')  
                 message = {"role": "assistant", "content": response.response}
                 st.session_state.messages.append(message)
     elif all(param in prompt for param in ["Uin", "Uo", "Prated", "fsw","two-level"]):
@@ -80,13 +82,12 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
                 reply="The two-level buck-boost circuit operates in {} mode,the circuit inductance L value is {}H ,the value of capacitor C1 is {}F,The value of capacitor C2 is {}F ,the load resistance R is {}Ω .For this power supply, I recommend you to use the PI controller, the block diagram of the controller is shown below, where KP value is {}, KI value is {}.".format(M,L,C1,C2,R,KP,KI)
                 st.write(reply)
                 st.image('twolevelbuckboostPI.png')
-                # 可以在这里添加其他处理逻辑
+                
                 message = {"role": "assistant", "content": reply}
                 st.session_state.messages.append(message)
     elif all(param in prompt for param in ["Uin", "Uo", "Prated", "fsw","three-level"]):
         with st.chat_message("assistant"):
-            with st.spinner("Thinking..."):
-                # 如果用户输入不包含"拓扑图"，执行其他回答或操作
+            with st.spinner("Thinking...")：
                 response = chat_engine.chat(prompt,messages_history)
                 answer_list = ast.literal_eval(response.response)
                # st.write(answer_list)
@@ -95,7 +96,6 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
                 reply="The three-level buck-boost circuit operates in {} mode,the circuit inductance L value is {}H ,the value of capacitor C1 is {}F,the value of capacitor C2 is {}F,the value of capacitor C3 is {}F,the load resistance R is {}Ω .For this power supply, I recommend you to use the PI controller, the block diagram of the controller is shown below, where KP value is {}, KI value is {}.".format(M,L,C1,C2,C3,R,KP,KI)
                 st.write(reply)
                 st.image('threelevelbuckboostPI.png')
-                # 可以在这里添加其他处理逻辑
                 message = {"role": "assistant", "content": reply}
                 st.session_state.messages.append(message)
     else:
