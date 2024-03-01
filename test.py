@@ -19,7 +19,7 @@ st.info( "Hello, I am a robot designed specifically for buck-boost circuits!", i
 with open('./second.txt', 'r') as file:
     content1 = file.read()
   
-clear_button=st.button('Clear Conversation',key='clear')
+clear_button=st.sidebar.button('Clear Conversation',key='clear')
 
 if clear_button or "messages" not in st.session_state:  # Initialize the chat messages history
     st.session_state.messages = [{"role": "user", "content": content1},
