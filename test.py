@@ -87,7 +87,7 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
                 st.session_state.messages.append(message)
     elif all(param in prompt for param in ["Uin", "Uo", "Prated", "fsw","three-level"]):
         with st.chat_message("assistant"):
-            with st.spinner("Thinking...")：
+            with st.spinner("Thinking..."):
                 response = chat_engine.chat(prompt,messages_history)
                 answer_list = ast.literal_eval(response.response)
                # st.write(answer_list)
