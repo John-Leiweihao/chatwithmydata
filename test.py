@@ -62,15 +62,6 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
                 st.image('twolevelbuckboost.png')
                 message = {"role": "assistant", "content": response.response}
                 st.session_state.messages.append(message)
-
-        with st.chat_message("assistant"):
-            with st.spinner("Thinking..."):
-                response = chat_engine.chat(prompt,messages_history)
-                st.write(response.response)
-                st.write("The topology of the two-level buck-boost circuit is shown in the following figure")
-                st.image('twolevelbuckboost.png')  
-                message = {"role": "assistant", "content": response.response}
-                st.session_state.messages.append(message)
     elif "three-level buck-boost" in prompt.lower():
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
