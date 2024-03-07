@@ -67,6 +67,4 @@ def calculation4(Uin,Uo,Prated,fsw):
     C_out_str=format(C_out,'.4g')
     KP_str=format(KP,'.4g')
     KI_str=format(KI,'.4g')
-    return trans_n,Lr_str,C_VD_str,C_out_str,KP_str,KI_str
-trans_n,Lr,C_VD,C_out,KP,KI=calculation4(900,800,100e3,50e3)
-print(trans_n,Lr,C_VD,C_out,KP,KI)
+    return trans_n,Lr_str,C_VD_str,C_out_str,RL,KP_str,KI_str
