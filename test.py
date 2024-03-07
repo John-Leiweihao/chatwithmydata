@@ -80,7 +80,7 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
                 st.image('threelevelbuckboost.png')  
                 message = {"role": "assistant", "content": response.response}
                 st.session_state.messages.append(message)
-    elif "NPC-type three-level full-bridge DAB"in prompt.lower():
+    elif "npc-type three-level full-bridge dab"in prompt.lower():
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
                 response = chat_engine.chat(prompt,messages_history)
