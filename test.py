@@ -53,7 +53,25 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
     for m in st.session_state.messages
 ]
   #回答
-    if "two-level buck-boost" in prompt:
+    if prompt := st.chat_input("Your question"):  # Prompt for user input and save to chat history
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    with st.chat_message("user"):
+        st.markdown(prompt)
+    messages_history = [
+        ChatMessage(role=MessageRole.USER if m["role"] == "user" else MessageRole.ASSISTANT, content=m["content"])
+        for m in st.session_state.messages
+    ]
+    # 回答
+    if "two-level buck-boost" in prompt.lower():  # 检查输入，不区分大小写
+        with st.chat_message("assistant"):
+            with st.spinner("Thinking..."):
+                response = chat_engine.chat(prompt, messages_history)
+                st.write(response.response)
+                st.write("The topology of the two-level buck-boost circuit is shown in the following figure")
+                st.image('twolevelbuckboost.png')
+                message = {"role": "assistant", "content": response.response}
+                st.session_state.messages.append(message)
+
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
                 response = chat_engine.chat(prompt,messages_history)
@@ -62,7 +80,7 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
                 st.image('twolevelbuckboost.png')  
                 message = {"role": "assistant", "content": response.response}
                 st.session_state.messages.append(message)
-    elif "three-level buck-boost"or"Three-Level Buck-Boost" in prompt:
+    elif "three-level buck-boost" in prompt.lower():
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
                 response = chat_engine.chat(prompt,messages_history)
@@ -71,7 +89,7 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
                 st.image('threelevelbuckboost.png')  
                 message = {"role": "assistant", "content": response.response}
                 st.session_state.messages.append(message)
-    elif "NPC-type three-level full-bridge DAB"or"NPC-Type Three-Level Full-Bridge DAB" in prompt:
+    elif "NPC-type three-level full-bridge DAB"in prompt.lower():
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
                 response = chat_engine.chat(prompt,messages_history)
