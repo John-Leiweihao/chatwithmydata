@@ -52,15 +52,6 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
     ChatMessage(role=MessageRole.USER if m["role"] == "user" else MessageRole.ASSISTANT, content=m["content"])
     for m in st.session_state.messages
 ]
-  #回答
-    if prompt := st.chat_input("Your question"):  # Prompt for user input and save to chat history
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    with st.chat_message("user"):
-        st.markdown(prompt)
-    messages_history = [
-        ChatMessage(role=MessageRole.USER if m["role"] == "user" else MessageRole.ASSISTANT, content=m["content"])
-        for m in st.session_state.messages
-    ]
     # 回答
     if "two-level buck-boost" in prompt.lower():  # 检查输入，不区分大小写
         with st.chat_message("assistant"):
