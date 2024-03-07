@@ -7,6 +7,7 @@ from llama_index.core.memory import ChatMemoryBuffer
 from llama_index.core.llms import ChatMessage, MessageRole
 import twolevelbuckboost
 import threelevelbuckboost
+import NPCDAB
 import ast
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 api_base = "https://pro.aiskt.com/v1"
@@ -31,7 +32,7 @@ if clear_button or "messages" not in st.session_state:  # Initialize the chat me
 def load_data():
     with st.spinner(text="Loading and indexing the buck-boost docs – hang tight! This should take 1-2 minutes."):
         docs = SimpleDirectoryReader("data1").load_data()
-        service_context = ServiceContext.from_defaults(llm=OpenAI(model="gpt-4-0125-preview", temperature=0.1))
+        service_context = ServiceContext.from_defaults(llm=OpenAI(model="gpt-4-0125-preview", temperature=0.1,system_prompt="You are an expert in power supply design in the field of power electronics, and your job is to answer technical questions.Assume that all problems are related to the power supply design.Keep your answers technical and fact-based -- don't hallucinate."))
         index = VectorStoreIndex.from_documents(docs, service_context=service_context)
         return index
 
@@ -70,6 +71,15 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
                 st.image('threelevelbuckboost.png')  
                 message = {"role": "assistant", "content": response.response}
                 st.session_state.messages.append(message)
+    elif "NPC-type three-level full-bridge DAB" in prompt:
+        with st.chat_message("assistant"):
+            with st.spinner("Thinking..."):
+                response = chat_engine.chat(prompt,messages_history)
+                st.write(response.response)
+                st.write("The topology of the NPC-type three-level full-bridge DAB is shown in the following figure")
+                st.image('NPCDAB.png')  
+                message = {"role": "assistant", "content": response.response}
+                st.session_state.messages.append(message)
     elif all(param in prompt for param in ["Uin", "Uo", "Prated", "fsw","two-level"]):
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
@@ -96,6 +106,19 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
                 reply="The three-level buck-boost circuit operates in {} mode,the circuit inductance L value is {}H ,the value of capacitor C1 is {}F,the value of capacitor C2 is {}F,the value of capacitor C3 is {}F,the load resistance R is {}Ω .For this power supply, I recommend you to use the PI controller, the block diagram of the controller is shown below, where KP value is {}, KI value is {}.".format(M,L,C1,C2,C3,R,KP,KI)
                 st.write(reply)
                 st.image('threelevelbuckboostPI.png')
+                message = {"role": "assistant", "content": reply}
+                st.session_state.messages.append(message)
+    elif all(param in prompt for param in ["Uin", "Uo", "Prated", "fsw","NPC"]):
+        with st.chat_message("assistant"):
+            with st.spinner("Thinking..."):
+                response = chat_engine.chat(prompt,messages_history)
+                answer_list = ast.literal_eval(response.response)
+               # st.write(answer_list)
+                Uin, Uo, Prated, fsw = answer_list
+                n,L, Cin,Cout,R,KP,KI=NPCDAB.calculation4(Uin,Uo,Prated,fsw)
+                reply="The turns ratio of the transformer in the NPC-type three-level full-bridge DAB circuit is {}:1.,the circuit inductance L value is {}H ,the value of capacitor Cin is {}F,the value of capacitor Cout is {}F,the load resistance R is {}Ω .For this power supply, I recommend you to use the PI controller, the block diagram of the controller is shown below, where KP value is {}, KI value is {}.".format(n,L,Cin,Cout,R,KP,KI)
+                st.write(reply)
+                st.image('NPCDABPI.png')
                 message = {"role": "assistant", "content": reply}
                 st.session_state.messages.append(message)
     else:
