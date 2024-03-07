@@ -53,7 +53,7 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
     for m in st.session_state.messages
 ]
   #回答
-if "two-level buck-boost" or "Two-Level Buck-Boost" in prompt:
+  if "two-level buck-boost"or"Two-Level Buck-Boost" in prompt:
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
                 response = chat_engine.chat(prompt,messages_history)
@@ -62,7 +62,7 @@ if "two-level buck-boost" or "Two-Level Buck-Boost" in prompt:
                 st.image('twolevelbuckboost.png')  
                 message = {"role": "assistant", "content": response.response}
                 st.session_state.messages.append(message)
-elif "three-level buck-boost" or "Three-Level Buck-Boost" in prompt:
+  elif "three-level buck-boost"or"Three-Level Buck-Boost" in prompt:
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
                 response = chat_engine.chat(prompt,messages_history)
@@ -71,7 +71,7 @@ elif "three-level buck-boost" or "Three-Level Buck-Boost" in prompt:
                 st.image('threelevelbuckboost.png')  
                 message = {"role": "assistant", "content": response.response}
                 st.session_state.messages.append(message)
-elif "NPC-type three-level full-bridge DAB" or "NPC-Type Three-Level Full-Bridge DAB" in prompt:
+  elif "NPC-type three-level full-bridge DAB"or"NPC-Type Three-Level Full-Bridge DAB" in prompt:
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
                 response = chat_engine.chat(prompt,messages_history)
@@ -80,7 +80,7 @@ elif "NPC-type three-level full-bridge DAB" or "NPC-Type Three-Level Full-Bridge
                 st.image('NPCDAB.png')  
                 message = {"role": "assistant", "content": response.response}
                 st.session_state.messages.append(message)
-elif all(param in prompt for param in ["Uin", "Uo", "Prated", "fsw","two-level"]):
+  elif all(param in prompt for param in ["Uin", "Uo", "Prated", "fsw","two-level"]):
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
                 # 如果用户输入不包含"拓扑图"，执行其他回答或操作
@@ -95,7 +95,7 @@ elif all(param in prompt for param in ["Uin", "Uo", "Prated", "fsw","two-level"]
                 
                 message = {"role": "assistant", "content": reply}
                 st.session_state.messages.append(message)
-elif all(param in prompt for param in ["Uin", "Uo", "Prated", "fsw","three-level"]):
+  elif all(param in prompt for param in ["Uin", "Uo", "Prated", "fsw","three-level"]):
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
                 response = chat_engine.chat(prompt,messages_history)
@@ -108,7 +108,7 @@ elif all(param in prompt for param in ["Uin", "Uo", "Prated", "fsw","three-level
                 st.image('threelevelbuckboostPI.png')
                 message = {"role": "assistant", "content": reply}
                 st.session_state.messages.append(message)
-elif all(param in prompt for param in ["Uin", "Uo", "Prated", "fsw","NPC"]):
+  elif all(param in prompt for param in ["Uin", "Uo", "Prated", "fsw","NPC"]):
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
                 response = chat_engine.chat(prompt,messages_history)
@@ -121,7 +121,7 @@ elif all(param in prompt for param in ["Uin", "Uo", "Prated", "fsw","NPC"]):
                 st.image('NPCDABPI.png')
                 message = {"role": "assistant", "content": reply}
                 st.session_state.messages.append(message)
-else:
+  else:
          with st.chat_message("assistant"):
              with st.spinner("Thinking..."):
                 response = chat_engine.chat(prompt,messages_history)
