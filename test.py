@@ -53,7 +53,7 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
     for m in st.session_state.messages
 ]
   #回答
-    if "two-level buck-boost" in prompt:
+    if "two-level buck-boost" or "Two-Level Buck-Boost" in prompt:
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
                 response = chat_engine.chat(prompt,messages_history)
@@ -62,7 +62,7 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
                 st.image('twolevelbuckboost.png')  
                 message = {"role": "assistant", "content": response.response}
                 st.session_state.messages.append(message)
-    elif "three-level buck-boost" in prompt:
+    elif "three-level buck-boost" or "Three-Level Buck-Boost" in prompt:
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
                 response = chat_engine.chat(prompt,messages_history)
@@ -71,7 +71,7 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
                 st.image('threelevelbuckboost.png')  
                 message = {"role": "assistant", "content": response.response}
                 st.session_state.messages.append(message)
-    elif "NPC-type three-level full-bridge DAB" in prompt:
+    elif "NPC-type three-level full-bridge DAB" or "NPC-Type Three-Level Full-Bridge DAB" in prompt:
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
                 response = chat_engine.chat(prompt,messages_history)
