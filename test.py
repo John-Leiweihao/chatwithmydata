@@ -22,7 +22,7 @@ with open('./second.txt', 'r') as file:
 with st.sidebar:
   st.title('The converter supply supports design.')
   st.markdown('---')
-  st.markdown(r'Two-Level Buck-Boost\Three-Level Buck-Boost\NPC-Type Three-Level Full-Bridge DAB')
+  st.markdown('Two-Level Buck-Boost\n- Three-Level Buck-Boost\n- NPC-Type Three-Level Full-Bridge DAB')
 clear_button=st.sidebar.button('Clear Conversation',key='clear')
 
 if clear_button or "messages" not in st.session_state:  # Initialize the chat messages history
