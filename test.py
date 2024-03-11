@@ -20,6 +20,7 @@ st.info( "Hello, I am a robot designed specifically for converters!", icon="🤟
 with open('./second.txt', 'r') as file:
     content1 = file.read()
 with st.sidebar:
+  st.markdown("<h1 style='color: #FF5733;'>Optional Converter</h1>", unsafe_allow_html=True)
   st.title('Optional Converter')
   st.markdown('---')
   st.markdown('\n- Two-Level Buck-Boost\n- Three-Level Buck-Boost\n- NPC-Type Three-Level Full-Bridge DAB')
