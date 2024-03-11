@@ -97,7 +97,7 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
                 st.write(reply)
                 reply1="For this converter, I recommend you to use the single current loop control strategy. Its control block diagram and the controller built by simulink are shown in the figure below.When M=1 the circuit operates in Buck mode, and when M=0 the circuit operates in Boost mode.Where IL is the reference value of inductance current and IL1/IL0 is the measured value of inductance current.The controller used is PI controller, where KP value is {}, KI value is {}, and the output voltage is controlled to the reference voltage by controlling the duty cycle and on-time of switches S1,S2".format(KP,KI)
                 st.write(reply1)
-                col1, col2 = st.beta_columns(2)
+                col1, col2 = st.columns(2)
                 col1.image('twolevelbuckboostPI控制框架.png')
                 col2.image('twolevelbuckboostPI.png')
                 message = {"role": "assistant", "content": reply}
@@ -114,7 +114,7 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
                 st.write(reply)
                 reply1="For this converter, I recommend you to use the single current loop control strategy. Its control block diagram and the controller built by simulink are shown in the figure below.When M=1 the circuit operates in Buck mode, and when M=0 the circuit operates in Boost mode.Where IL is the reference value of inductance current and IL1/IL0 is the measured value of inductance current.The controller used is PI controller, where KP value is{}, KI value is{}, and the output voltage is controlled to the reference voltage by controlling the duty cycle and on-time of switches S1,S2,S3 and S4.".format(KP,KI)
                 st.write(reply1)
-                col1, col2 = st.beta_columns(2)
+                col1, col2 = st.columns(2)
                 col1.image('threelevelbuckboostPI控制框架.png')
                 col2.image('threelevelbuckboostPI.png')
                 message = {"role": "assistant", "content": reply}
