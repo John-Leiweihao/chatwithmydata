@@ -125,9 +125,12 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
                # st.write(answer_list)
                 Uin, Uo, Prated, fsw = answer_list
                 n,L, Cin,Cout,R,KP,KI=NPCDAB.calculation4(Uin,Uo,Prated,fsw)
-                reply="The turns ratio of the transformer in the NPC-type three-level full-bridge DAB circuit is {}:1.,the circuit inductance L value is {}H ,the value of capacitor Cin is {}F,the value of capacitor Cout is {}F,the load resistance R is {}Ω .For this power supply, I recommend you to use the PI controller, the block diagram of the controller is shown below, where KP value is {}, KI value is {}.".format(n,L,Cin,Cout,R,KP,KI)
+                reply="The turns ratio of the transformer in the NPC-type three-level full-bridge DAB circuit is {}:1.,the circuit inductance L value is {}H ,the value of capacitor Cin is {}F,the value of capacitor Cout is {}F,the load resistance R is {}Ω .".format(n,L,Cin,Cout,R)
                 st.write(reply)
-                st.image('NPCDABPI.png')
+                reply1="For this converter, I recommend single voltage closed loop control for the single phase shift control strategy,Its control block diagram and the controller built by simulink are shown in the figure below, where DCout is the reference value of output voltage,V2 is the measured value of the output voltage, and the controller used is the PI controller, KP value is{}, KI value is{}. By controlling the phase difference between the primary unclamped switch tube and the secondary unclamped switch tube, the output voltage is controlled to the reference voltage.".format(KP,KI)
+                st.write(reply1)
+                st.image('NPCDABPI控制策略.png')
+                st.image('NPCDAB.png')
                 message = {"role": "assistant", "content": reply}
                 st.session_state.messages.append(message)
     else:
