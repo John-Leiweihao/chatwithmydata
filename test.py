@@ -93,10 +93,11 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
                 #st.write(response.response)
                 Uin, Uo, Prated, fsw = answer_list
                 M,L, C1,C2,R,KP,KI=twolevelbuckboost.calculation2(Uin,Uo,Prated,fsw)
-                reply="The two-level buck-boost circuit operates in {} mode,the circuit inductance L value is {}H ,the value of capacitor C1 is {}F,The value of capacitor C2 is {}F ,the load resistance R is {}Ω .For this power supply, I recommend you to use the PI controller, the block diagram of the controller is shown below, where KP value is {}, KI value is {}.".format(M,L,C1,C2,R,KP,KI)
+                reply="The two-level buck-boost circuit operates in {} mode,the circuit inductance L value is {}H ,the value of capacitor C1 is {}F,The value of capacitor C2 is {}F ,the load resistance R is {}Ω .For this converter, I recommend you to use the single current loop control strategy. Its control block diagram and the controller built by simulink are shown in the figure below.When M=1 the circuit operates in Buck mode, and when M=0 the circuit operates in Boost mode.Where IL is the reference value of inductance current and IL1/IL0 is the measured value of inductance current.The controller used is PI controller, where KP value is {}, KI value is {}, and the output voltage is controlled to the reference voltage by controlling the duty cycle and on-time of switches S1,S2".format(M,L,C1,C2,R,KP,KI)
                 st.write(reply)
-                st.image('twolevelbuckboostPI.png')
-                
+                col1, col2 = st.beta_columns(2)
+                col1.image('twolevelbuckboostPI控制框架.png')
+                col2.image('twolevelbuckboostPI.png')
                 message = {"role": "assistant", "content": reply}
                 st.session_state.messages.append(message)
     elif all(param in prompt for param in ["Uin", "Uo", "Prated", "fsw","three-level"]):
@@ -107,9 +108,11 @@ if prompt := st.chat_input("Your question"):  # Prompt for user input and save t
                # st.write(answer_list)
                 Uin, Uo, Prated, fsw = answer_list
                 M,L, C1, C2,C3,R,KP,KI=threelevelbuckboost.calculation3(Uin,Uo,Prated,fsw)
-                reply="The three-level buck-boost circuit operates in {} mode,the circuit inductance L value is {}H ,the value of capacitor C1 is {}F,the value of capacitor C2 is {}F,the value of capacitor C3 is {}F,the load resistance R is {}Ω .For this power supply, I recommend you to use the PI controller, the block diagram of the controller is shown below, where KP value is {}, KI value is {}.".format(M,L,C1,C2,C3,R,KP,KI)
+                reply="The three-level buck-boost circuit operates in {} mode,the circuit inductance L value is {}H ,the value of capacitor C1 is {}F,the value of capacitor C2 is {}F,the value of capacitor C3 is {}F,the load resistance R is {}Ω .For this converter, I recommend you to use the single current loop control strategy. Its control block diagram and the controller built by simulink are shown in the figure below.When M=1 the circuit operates in Buck mode, and when M=0 the circuit operates in Boost mode.Where IL is the reference value of inductance current and IL1/IL0 is the measured value of inductance current.The controller used is PI controller, where KP value is{}, KI value is{}, and the output voltage is controlled to the reference voltage by controlling the duty cycle and on-time of switches S1,S2,S3 and S4.".format(M,L,C1,C2,C3,R,KP,KI)
                 st.write(reply)
-                st.image('threelevelbuckboostPI.png')
+                col1, col2 = st.beta_columns(2)
+                col1.image('threelevelbuckboostPI控制框架.png')
+                col2.image('threelevelbuckboostPI.png')
                 message = {"role": "assistant", "content": reply}
                 st.session_state.messages.append(message)
     elif all(param in prompt for param in ["Uin", "Uo", "Prated", "fsw","NPC"]):
