@@ -20,7 +20,7 @@ st.info( "Hello, I am a robot designed specifically for buck-boost circuits!", i
 with open('./second.txt', 'r') as file:
     content1 = file.read()
 with st.sidebar:
-  st.title('The currently supported design converter..')
+  st.title('supported converter')
   st.markdown('---')
   st.markdown('\n- Two-Level Buck-Boost\n- Three-Level Buck-Boost\n- NPC-Type Three-Level Full-Bridge DAB')
 clear_button=st.sidebar.button('Clear Conversation',key='clear')
