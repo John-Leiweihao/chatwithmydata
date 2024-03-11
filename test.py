@@ -16,13 +16,14 @@ openai.base_url = api_base
 st.set_page_config(page_title="Chat with the Power electronic robot", page_icon="💎", layout="centered",
                    initial_sidebar_state="auto", menu_items=None)
 st.title("Chat with the Power electronic robot🤖, powered by LlamaIndex 🙂")
-st.info( "Hello, I am a robot designed specifically for buck-boost circuits!", icon="🤟")
+st.info( "Hello, I am a robot designed specifically for converters!", icon="🤟")
 with open('./second.txt', 'r') as file:
     content1 = file.read()
 with st.sidebar:
   st.title('Optional Converter')
   st.markdown('---')
   st.markdown('\n- Two-Level Buck-Boost\n- Three-Level Buck-Boost\n- NPC-Type Three-Level Full-Bridge DAB')
+  st.markdown('---')
 clear_button=st.sidebar.button('Clear Conversation',key='clear')
 
 if clear_button or "messages" not in st.session_state:  # Initialize the chat messages history
