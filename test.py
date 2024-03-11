@@ -20,9 +20,9 @@ st.info( "Hello, I am a robot designed specifically for buck-boost circuits!", i
 with open('./second.txt', 'r') as file:
     content1 = file.read()
 with st.sidebar:
-  st.title('The converter supply supports design.')
+  st.title('The currently supported design converter..')
   st.markdown('---')
-  st.markdown('Two-Level Buck-Boost\n- Three-Level Buck-Boost\n- NPC-Type Three-Level Full-Bridge DAB')
+  st.markdown('\n- Two-Level Buck-Boost\n- Three-Level Buck-Boost\n- NPC-Type Three-Level Full-Bridge DAB')
 clear_button=st.sidebar.button('Clear Conversation',key='clear')
 
 if clear_button or "messages" not in st.session_state:  # Initialize the chat messages history
